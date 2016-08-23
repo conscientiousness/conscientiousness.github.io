@@ -5,7 +5,7 @@ header-img: img/home-bg.jpg
 email: n823n823@gmail.com
 description: "關於iOS, Objc, Swift 學習筆記 | 育緯，iOS & Apple Lover，iOS Developer"
 keyword: "iOS, Objc, Swift, developer, portfolio"
-url: "https://conscientiousness.github.io"              # your host, for absolute URL
+url: "http://lywdev.space"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
