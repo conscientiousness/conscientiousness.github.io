@@ -3,7 +3,7 @@ title: YuWei Blog
 SEOTitle: YuWei個人網站 | YuWei Blog
 header-img: img/home-bg.jpg
 email: n823n823@gmail.com
-description: "關於iOS, Objc, Swift 學習筆記 | 林育緯＠iOS Developer | 作品集"
+description: "iOS, Objc, Swift 學習筆記 | 林育緯＠iOS Developer | 作品集"
 keyword: "iOS, Objc, Swift, developer, portfolio"
 url: "http://lywdev.space"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
@@ -13,7 +13,7 @@ baseurl: ""                             # for example, '/blog' if your blog host
 # SNS settings
 RSS: false
 github_username:    conscientiousness
-#twitter_username:  huxpro
+twitter_username:   joedoit823
 facebook_username:  azer823
 # linkedin_username:  firstname-lastname-idxxxx
 
@@ -67,7 +67,7 @@ ga_domain:   lywdev.space
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "努力學習，樂於分享，四年程式++開發經驗，目前專注於iOS, Objc, Swift"
+sidebar-about-description: "努力學習，樂於分享，5年++程式開發經驗，目前專注於iOS, Objc, Swift"
 sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
