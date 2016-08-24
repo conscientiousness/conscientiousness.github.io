@@ -159,6 +159,78 @@ body, html {
 	background-size: 25px;
 }
 
+.i-branch:before {
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-branch.png") 50% 50% no-repeat;
+	background-size: 25px;
+}
+
+.i-segment:before {
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-segment.png") 50% 50% no-repeat;
+	background-size: 25px;
+}
+
+.i-newrelic:before {
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-newrelic.png") 50% 50% no-repeat;
+	background-size: 25px;
+}
+
+.i-realm:before {
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-realm.png") 50% 50% no-repeat;
+	background-size: 25px;
+}
+
+.i-google:before {
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-google.png") 50% 50% no-repeat;
+	background-size: 25px;
+}
+
+.i-gcm:before {
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-gcm.png") 50% 50% no-repeat;
+	background-size: 25px;
+}
+
+.i-facebook:before {
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-facebook.png") 50% 50% no-repeat;
+	background-size: 25px;
+}
+
+.i-afn:before {
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-afn.png") 50% 50% no-repeat;
+	background-size: 25px;
+}
+
 .i-vue:before {
 	content: "";
     display: block;
@@ -270,16 +342,27 @@ header img{
 	margin-top: 9px;
 	border-top: 1px solid #eeefef;
 }
-.cbp_tmlabel ul li.skill>span,
+.cbp_tmlabel ul li.skill>span{
+    display: block;
+    float: left;
+    font-size: 1.1rem;
+    width: 46px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    margin-right: 0px;
+    color: #a5a7aa;
+    transition: all 0.3s ease;
+}
 .cbp_tmlabel ul li.skill>a{
     display: block;
     float: left;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     width: 40px;
     height: 40px;
     text-align: center;
     line-height: 40px;
-    margin-right: 8px;
+    margin-right: 0px;
     color: #a5a7aa;
     transition: all 0.3s ease;
 }
