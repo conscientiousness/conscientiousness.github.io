@@ -121,8 +121,12 @@ body, html {
 }
 
 .cbp_tmicon-phone:before {
-	content: "\e004";
-	font-family: 'huxico';
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-apple.png") 50% 50% no-repeat;
+	background-size: 20px;
 }
 
 .cbp_tmicon-screen:before {
@@ -146,6 +150,15 @@ body, html {
 }
 
 /** Venders Logo **/
+.i-swift:before {
+	content: "";
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url("../images/logo-swift.png") 50% 50% no-repeat;
+	background-size: 25px;
+}
+
 .i-vue:before {
 	content: "";
     display: block;
