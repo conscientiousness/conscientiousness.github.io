@@ -231,41 +231,24 @@ body, html {
 	background-size: 25px;
 }
 
-.i-vue:before {
-	content: "";
-    display: block;
-    width: 40px;
-    height: 40px;
-    background: url("../images/logo-vue.png") 50% 50% no-repeat;
-    background-size: 20px;
-}
-
-.i-kissy:before {
+.i-firebase:before {
 	content: "";
 	display: block;
 	width: 40px;
 	height: 40px;
-	background: url("../images/logo-kissy.png") 50% 50% no-repeat;
-	background-size: 20px;
+	background: url("../images/logo-firebase.png") 50% 50% no-repeat;
+	background-size: 25px;
 }
 
-.i-jquery:before {
+.i-parse:before {
 	content: "";
 	display: block;
 	width: 40px;
 	height: 40px;
-	background: url("../images/logo-jquery.png") 50% 50% no-repeat;
-	background-size: 20px;
+	background: url("../images/logo-parse.png") 50% 50% no-repeat;
+	background-size: 25px;
 }
 
-.i-react:before {
-	content: "";
-	display: block;
-	width: 40px;
-	height: 40px;
-	background: url("../images/logo-react.png") 50% 50% no-repeat;
-	background-size: 22px;
-}
 
 /******* Hux Branch *****/
 html{
