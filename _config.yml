@@ -1,6 +1,7 @@
 # Site settings
-title: YuWei Blog
-SEOTitle: YuWei個人網站 | YuWei Blog
+title: LYW Blog
+subtitle: Happy Coding
+SEOTitle: YuWei 學習筆記 | YuWei Blog
 header-img: img/home-bg.jpg
 email: n823n823@gmail.com
 description: "iOS, Objc, Swift 學習筆記 | 林育緯＠iOS Developer | 作品集"
@@ -67,7 +68,7 @@ ga_domain:   lywdev.space
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "努力學習，樂於分享，5年++程式開發經驗，目前專注於iOS, Objc, Swift"
+sidebar-about-description: "永遠有學不完事物等待我去挖掘，努力學習，樂於分享，4年++程式開發經驗，目前專注於iOS, Objc, Swift"
 sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
@@ -76,7 +77,3 @@ sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in
 featured-tags: true                     # whether or not using Feature-Tags
 featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
 
-
-
-# Friends
-friends: []
