@@ -13,9 +13,11 @@ tags:
 
 ### 基本概念
 [Jekyll](https://jekyllrb.com/) 是一個Open Source的靜態網站產生器，如官方說明。
+
 > Jekyll is a simple, blog-aware, static site generator perfect for personal, project, or organization sites. Think of it like a file-based CMS, without all the complexity. Jekyll takes your content, renders Markdown and Liquid templates, and spits out a complete, static website ready to be served by Apache, Nginx or another web server. Jekyll is the engine behind GitHub Pages, which you can use to host sites right from your GitHub repositories
 
 [Github Pages](https://pages.github.com/) 是 GitHub 提供的網站托管服務，他有流量與儲存空間無限制的優勢，速度也不會太差。
+
 > You get one site per GitHub account and organization,
 and unlimited project sites.
 
