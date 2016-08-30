@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - @property'
 date: 2015-05-24 16:06
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 # property 說明與用法
 
@@ -17,7 +20,7 @@ categories:
 3. 以`.`運算子來做存取。
 
 ```java
-@interface cat : NSObject  
+@interface cat : NSObject
 @property int count;
 @end
 ```
@@ -36,18 +39,18 @@ categories:
 
 ####參數
 1.set方法內存管理相關
- - retain : 
- - assign : 
- - copy   : 
+ - retain :
+ - assign :
+ - copy   :
 
  2.是否要建立set方法
- - readwrite : 
- - readonly  : 
+ - readwrite :
+ - readonly  :
 
  3.多執行緒管理
- - nonatomic : 沒有使用多個(thread;線程;執行緒)時，建議使用。 
+ - nonatomic : 沒有使用多個(thread;線程;執行緒)時，建議使用。
  - atomic    : 有多執行緒時在用。
- 
+
 
 
 

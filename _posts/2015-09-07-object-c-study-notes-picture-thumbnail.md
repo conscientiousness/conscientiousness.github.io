@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - 圖片縮圖'
 date: 2015-09-07 06:00
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 此為學習筆記，如有錯誤煩請指正，感恩:)
 
@@ -13,12 +16,12 @@ categories:
 - 設定長寬、縮圖模式(UIViewContentModeScaleAspectFill、UIViewContentModeScaleAspectFit)、JEPG壓縮強度
 ```objc
 + (NSData*)resizeImage:(UIImage *)anImage width:(float)width height:(float)height contentMode:(UIViewContentMode)contentMode{
-    
-    UIImage *resizedImage = [anImage resizedImageWithContentMode:contentMode 
+
+    UIImage *resizedImage = [anImage resizedImageWithContentMode:contentMode
     bounds:CGSizeMake(width, height) interpolationQuality:kCGInterpolationHigh];
-    
+
     NSData *imageData = UIImageJPEGRepresentation(resizedImage, 0.7f);
-    
+
     return imageData;
 }
 ```
@@ -32,18 +35,18 @@ categories:
     CGFloat horizontalRatio = bounds.width / self.size.width;
     CGFloat verticalRatio = bounds.height / self.size.height;
     CGFloat ratio;
-    
+
     switch (contentMode) {
         case UIViewContentModeScaleAspectFill:
             ratio = MAX(horizontalRatio, verticalRatio);
             break;
-            
+
         case UIViewContentModeScaleAspectFit:
             ratio = MIN(horizontalRatio, verticalRatio);
             break;
-            
+
     }
-    
+
     CGSize newSize = CGSizeMake(self.size.width * ratio, self.size.height * ratio);
     return [self resizedImage:newSize interpolationQuality:quality];
 }
@@ -55,7 +58,7 @@ categories:
 ```objc
 - (UIImage *)resizedImage:(CGSize)newSize interpolationQuality:(CGInterpolationQuality)quality {
     BOOL drawTransposed;
-    
+
     switch (self.imageOrientation) {
         case UIImageOrientationLeft:
         case UIImageOrientationLeftMirrored:
@@ -63,11 +66,11 @@ categories:
         case UIImageOrientationRightMirrored:
             drawTransposed = YES;
             break;
-            
+
         default:
             drawTransposed = NO;
     }
-    
+
     return [self resizedImage:newSize
                     transform:[self transformForOrientation:newSize]
                drawTransposed:drawTransposed
@@ -86,7 +89,7 @@ categories:
     CGRect newRect = CGRectIntegral(CGRectMake(0, 0, newSize.width, newSize.height));
     CGRect transposedRect = CGRectMake(0, 0, newRect.size.height, newRect.size.width);
     CGImageRef imageRef = self.CGImage;
-    
+
     // Build a context that's the same dimensions as the new size
     CGContextRef bitmap = CGBitmapContextCreate(NULL,
                                                 newRect.size.width,
@@ -95,24 +98,24 @@ categories:
                                                 0,
                                                 CGImageGetColorSpace(imageRef),
                                                 CGImageGetBitmapInfo(imageRef));
-    
+
     // Rotate and/or flip the image if required by its orientation
     CGContextConcatCTM(bitmap, transform);
-    
+
     // Set the quality level to use when rescaling
     CGContextSetInterpolationQuality(bitmap, quality);
-    
+
     // Draw into the context; this scales the image
     CGContextDrawImage(bitmap, transpose ? transposedRect : newRect, imageRef);
-    
+
     // Get the resized image from the context and a UIImage
     CGImageRef newImageRef = CGBitmapContextCreateImage(bitmap);
     UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
-    
+
     // Clean up
     CGContextRelease(bitmap);
     CGImageRelease(newImageRef);
-    
+
     return newImage;
 }
 ```

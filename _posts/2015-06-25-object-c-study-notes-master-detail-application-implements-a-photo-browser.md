@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - 用Master-Detail Application實作照片瀏覽功能[未完]'
 date: 2015-06-25 08:51
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 XCODE : 6.3.2
 
@@ -23,9 +26,9 @@ XCODE : 6.3.2
 
 (2)
 ```java
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender { 
-    UINavigationController *detailNavigationContoller = segue.destinationViewController;    
-    DetailViewController *detailViewController = (DetailViewController*)[detailNavigationContoller topViewController];   
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UINavigationController *detailNavigationContoller = segue.destinationViewController;
+    DetailViewController *detailViewController = (DetailViewController*)[detailNavigationContoller topViewController];
     NSArray *selectedItem = self.collectionView.indexPathsForSelectedItems;
     NSIndexPath *targetIndexPath = selectedItem[0];
     detailViewController.targetIndex = targetIndexPath.row;

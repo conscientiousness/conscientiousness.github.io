@@ -2,14 +2,17 @@
 layout: post
 title: 'Object-C 學習筆記 - UIWebView'
 date: 2015-06-14 13:51
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 XCODE : 6.3.2
 github : https://github.com/conscientiousness/demoUIWebView
 
 
-# 目標 : 
+# 目標 :
 APP內網頁瀏覽及操作
 
 # 畫面 :
@@ -80,7 +83,7 @@ APP內網頁瀏覽及操作
     //關閉鍵盤
     [textField resignFirstResponder];
     //呼叫goButtonPress method
-    [self goButtonPress:nil];    
+    [self goButtonPress:nil];
     return NO;
 }
 ```
@@ -96,8 +99,8 @@ APP內網頁瀏覽及操作
 - (void) webViewDidStartLoad:(UIWebView *)webView {
     [_loadindView startAnimating];
 }
-- (void) webViewDidFinishLoad:(UIWebView *)webView {    
-    [_loadindView stopAnimating];   
+- (void) webViewDidFinishLoad:(UIWebView *)webView {
+    [_loadindView stopAnimating];
 }
 - (void) webview:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     [_loadindView stopAnimating];
@@ -107,9 +110,9 @@ APP內網頁瀏覽及操作
 - 最後這個method可以知道，我們URL跳轉的流程，可以藉此來控管是否要跳轉網址
 
 ```java
-- (BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{    
-    NSString *urlString = [request.URL absoluteString];    
-    NSLog(@"URL String: %@",urlString);    
+- (BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    NSString *urlString = [request.URL absoluteString];
+    NSLog(@"URL String: %@",urlString);
     return YES;
 }
 ```

@@ -2,8 +2,11 @@
 layout: post
 title: 'viewController切換由程式碼產生三種方法'
 date: 2015-07-09 15:30
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 
 
@@ -27,7 +30,7 @@ addChildViewController: 是 iOS SDK 5+ 之後有的 method
 
 1.presentViewController
 由下至上：例如輸入 Wi-Fi 密碼時，會有一個由下至上的動畫，出現一個輸入密碼的畫面
-PresentViewController *firstviewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PresentViewController"]; 
+PresentViewController *firstviewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PresentViewController"];
 [self presentViewController:firstviewController animated:YES completion:nil];
 
 2.pushViewController(Navigation Controller)：可前進或回到哪個頁面

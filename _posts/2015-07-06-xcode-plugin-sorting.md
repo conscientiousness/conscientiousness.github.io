@@ -2,8 +2,10 @@
 layout: post
 title: 'XCODE Plugin 整理'
 date: 2015-07-06 13:24
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Xcode
 ---
 目前只用了這兩個，請多多推薦
 

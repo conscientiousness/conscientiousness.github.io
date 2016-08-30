@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - 字串格式'
 date: 2015-06-16 13:25
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 ### 格式總覽
 

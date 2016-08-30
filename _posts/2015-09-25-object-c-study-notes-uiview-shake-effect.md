@@ -2,8 +2,11 @@
 layout: post
 title: 'object-C 學習筆記 - UIVIEW搖動效果'
 date: 2015-09-25 10:56
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 http://stackoverflow.com/questions/10294451/animating-uitextfield-to-indicate-a-wrong-password
 

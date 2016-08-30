@@ -2,8 +2,10 @@
 layout: post
 title: 'XCODE 出錯筆記 - Multiple errors occurred while copying the files'
 date: 2015-06-16 06:14
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Xcode
 ---
 ### 問題
 
@@ -12,7 +14,7 @@ categories:
 
 ### 解決方式
 
-1.點選選單的product->clear 
+1.點選選單的product->clear
 
 ![](http://i.imgur.com/EYnsp8F.png)
 

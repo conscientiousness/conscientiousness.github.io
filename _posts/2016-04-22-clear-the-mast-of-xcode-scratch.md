@@ -2,9 +2,12 @@
 layout: post
 title: '清除肥大的XCODE暫存檔'
 date: 2016-04-22 10:43
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Xcode
 ---
+
 `~/Library/Developer/Xcode/DerivedData/`
 `~/Library/Developer/Xcode/iOS DeviceSupport/`
 `~/Library/Developer/Xcode/Archives/`

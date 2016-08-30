@@ -2,9 +2,12 @@
 layout: post
 title: 'Swift 學習筆記 - code style'
 date: 2016-06-19 09:04
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - swift
 ---
+
 之前是參考一個日本工程師發佈的
 https://github.com/eure/swift-style-guide
 

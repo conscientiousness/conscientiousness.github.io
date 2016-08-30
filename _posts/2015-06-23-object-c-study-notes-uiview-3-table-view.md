@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - UIView(3):Table View'
 date: 2015-06-23 03:03
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 XCODE : 6.3.2
 github : https://github.com/conscientiousness/demoUIView.git
@@ -42,17 +45,17 @@ github : https://github.com/conscientiousness/demoUIView.git
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;//右上方建立內建edit按鈕
-    datas = [NSMutableArray new];    
+    datas = [NSMutableArray new];
     //Add Button Support
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addBtnPressed)];   
-    self.navigationItem.leftBarButtonItem = addButton;//左上方建立新增按鈕，點擊會執行自定義的Method   
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addBtnPressed)];
+    self.navigationItem.leftBarButtonItem = addButton;//左上方建立新增按鈕，點擊會執行自定義的Method
 }
 ```
 [4.3] 建立點擊"+"會呼叫的Method
 - 可參考:http://blog.changyy.org/2012/08/ios-uitableviewcontroller-datasource.html
 - [注意] 要先更新`datas`在更新UI=>[self.tableView insertRowsAtIndexPaths...
 ```java
-- (void) addBtnPressed {  
+- (void) addBtnPressed {
     //將每次新增的資料放在array第一個位置
     [datas insertObject:[NSDate date] atIndex:0];
     //Insert into TableView 的位置
@@ -63,12 +66,12 @@ github : https://github.com/conscientiousness/demoUIView.git
 ```
 [4.4] 設定cellForRowAtIndexPath
 ```java
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {  
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //storyboard tableView 要設定 Identifier的名稱 = myCell
     //dequeueReusableCellWithIdentifier 負責處理cell資源運用
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath:indexPath];
-    
-    // Configure the cell...    
+
+    // Configure the cell...
     NSData *targetItem = datas[indexPath.row];
     cell.textLabel.text = targetItem.description;
     return cell;
@@ -96,12 +99,12 @@ github : https://github.com/conscientiousness/demoUIView.git
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 ```
 [4.7] 支援移動Cell，也要更新array內的資料
 ```java
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {   
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     //更新陣列內容
     //取移動cell row位置的資料=[datas objectAtIndex:fromIndexPath.row]
     id tmpItem = datas[fromIndexPath.row];
@@ -124,7 +127,7 @@ github : https://github.com/conscientiousness/demoUIView.git
 ```
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Nav4CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"nav4CustomCell" forIndexPath:indexPath];
-    
+
     // Configure the cell...
     ...
     return cell;

@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - UIView(2):Tab Bar,Navigation View'
 date: 2015-06-22 05:49
-comments: true
-categories: [ObjectC CocoaTouch TabBar Navigation]
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 XCODE : 6.3.2
 github : https://github.com/conscientiousness/demoUIView.git
@@ -44,9 +47,9 @@ shouldSelectViewController:(UIViewController *)viewController {
 (2)由程式碼生成UIBarButtonItem:
 ```objc
 UIBarButtonItem *left1=[[UIBarButtonItem alloc] initWithTitle:@"left1" style:UIBarButtonItemStylePlain target:self action:@selector(barButtonPressed:)];
-    
+
 UIBarButtonItem *left2=[[UIBarButtonItem alloc] initWithTitle:@"left2" style:UIBarButtonItemStylePlain target:self action:@selector(barButtonPressed:)];
-    
+
 //多個
 self.navigationItem.leftBarButtonItems = @[left1,left2];
 ```

@@ -5,7 +5,6 @@ date:       2015-04-05
 author:     "Jesse"
 catalog:    false
 tags:
-    - 新手
     - git
 ---
 

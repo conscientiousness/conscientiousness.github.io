@@ -2,9 +2,12 @@
 layout: post
 title: 'XCODE - Debugging App When Launched '
 date: 2015-09-30 17:04
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Xcode
 ---
+
 有時候要追蹤`didFinishLaunchingWithOptions`但APP就直接run起來了
 用下列方法就可以關閉自動run APP，我是在找推播問題時要用到
 

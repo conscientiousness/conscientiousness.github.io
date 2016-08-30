@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - UIView(1):Modal'
 date: 2015-06-15 05:48
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 XCODE : 6.3.2
 github : https://github.com/conscientiousness/demoUIView.git
@@ -58,7 +61,7 @@ github : https://github.com/conscientiousness/demoUIView.git
 
 ```java YellowViewController.m
  - (void) dealloc {
-    NSLog(@"YellowViewController dealloc.");   
+    NSLog(@"YellowViewController dealloc.");
 }
 ```
 
@@ -112,13 +115,13 @@ github : https://github.com/conscientiousness/demoUIView.git
 (3)到白色view的viewController.m import YellowViewController.h然後輸入以下method
 
 ```java viewController.m
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{    
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     //判斷是否為goYellow這條segue才執行，避免crash
     if([segue.identifier isEqualToString:@"goYellow"]){
          //第一種寫法
          //取得目標viewController
-         YellowViewController *target =segue.destinationViewController;         
-         target.infoString = [[NSDate date] description];     
+         YellowViewController *target =segue.destinationViewController;
+         target.infoString = [[NSDate date] description];
         //第二種寫法
         ///id target = segue.destinationViewController;
         //target setValue:[[NSDate date] description]
@@ -127,7 +130,7 @@ github : https://github.com/conscientiousness/demoUIView.git
 }
 ```
 
-簡略說明 : 
+簡略說明 :
 - 當prepareForSegue做完之後才會跳到黃色的view
 - 時間如要顯示台灣時間須作轉換(+8)
 - 第二種寫法的key相當於property的意思，所以infoString的value就是[[NSDate date] description]，不import YellowViewController.h 也可以work

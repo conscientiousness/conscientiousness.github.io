@@ -3,7 +3,11 @@ layout: post
 title: 'Object-C 學習筆記 - 多種遍歷方法(for-each)與比較'
 date: 2015-09-21 02:02
 comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 ###C Loops (for/while)
 ```objc

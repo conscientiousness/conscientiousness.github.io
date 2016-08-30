@@ -1,9 +1,12 @@
 ---
 layout: post
-title: 'Object-C 學習筆記 - Status bar 顏色變換'
+title: 'Object-C 學習筆記 - Status bar 動態變更顏色'
 date: 2016-04-20 08:41
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 1. info.plist中的`View controller-based status bar appearance`要設為`YES`
 2. 如要意隱藏NavigationBar要使用`self.navigationController.navigationBarHidden = YES`才可以

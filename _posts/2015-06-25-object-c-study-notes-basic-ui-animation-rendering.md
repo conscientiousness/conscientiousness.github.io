@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - 基本UI動畫呈現:照片輪播、view移動'
 date: 2015-06-25 06:07
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 XCODE : 6.3.2
 github : https://github.com/conscientiousness/demoUIAnimation

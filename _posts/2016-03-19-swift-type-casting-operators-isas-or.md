@@ -2,8 +2,11 @@
 layout: post
 title: 'Swift - Type-Casting Operators「is,as,?和!」 '
 date: 2016-03-19 14:23
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Swift
+    - iOS
 ---
 expression is type
 expression as type

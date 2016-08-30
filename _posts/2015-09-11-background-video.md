@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - 背景影片'
 date: 2015-09-11 07:15
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 實現背景影片連續播放，簡略步驟
 - 先設定AVAudioSession避免背景播放
@@ -26,7 +29,7 @@ categories:
     NSError *sessionError = nil;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:&sessionError];
     [[AVAudioSession sharedInstance] setActive:YES error:&sessionError];
-    
+
     //Set up player
     NSURL *movieURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"login-background-video" ofType:@"mp4"]];
     AVAsset *avAsset = [AVAsset assetWithURL:movieURL];
@@ -36,7 +39,7 @@ categories:
     [avPlayerLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     [avPlayerLayer setFrame:[[UIScreen mainScreen] bounds]];
     [self.videoView.layer addSublayer:avPlayerLayer];
-    
+
     //Config player
     [self.avplayer seekToTime:kCMTimeZero];
     [self.avplayer setVolume:0.0f];

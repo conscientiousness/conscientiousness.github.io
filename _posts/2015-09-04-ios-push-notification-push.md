@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - iOS推播Push '
 date: 2015-09-04 08:21
-comments: true
-categories: [object-c, push]
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 此為學習筆記，如有錯誤煩請指正，感恩:)
 
@@ -55,12 +58,12 @@ Production SSL Certificate
 ```objc
 static Communicator *_SingletonCommunicator = nil;
 + (instancetype) shared {
-    
+
     if(_SingletonCommunicator == nil)
     {
         _SingletonCommunicator = [Communicator new];
     }
-    
+
     return _SingletonCommunicator;
 }
 ```
@@ -80,60 +83,60 @@ static Communicator *_SingletonCommunicator = nil;
 [1.3]處理POST方法(以AFNetWorking實作)
 ```objc
 - (void) doPost:(NSString*)url parameters:(NSDictionary*)parameters success:(void (^)(id result)) successBlock fail:(void (^)(NSError *error)) failBlock {
-    
+
     //先建立AFNetWorking他的Singleton物件
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     //對應php端 ContentTypes
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    
+
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+
         NSLog(@"JSON: %@",responseObject);
         successBlock(responseObject);
-        
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+
         NSLog(@"Error: %@",error.description);
         failBlock(error);
-        
+
     }];
 }
 ```
 
 [1.4]處理下載訊息的Method
 ```objc
-- (void) downloadMessagesWithCompletion:(void (^)(NSError *error, id result))completion {    
+- (void) downloadMessagesWithCompletion:(void (^)(NSError *error, id result))completion {
 		//post 接收訊息的 api 得到json回傳值
     [self doPost:RETRIVEMESSAGES_URL parameters:nil success:^(id result) {
         completion(nil,result);
     } fail:^(NSError *error) {
         completion(error,nil);
-    }];   
+    }];
 }
 ```
 
 [1.5]處理送出訊息的Method
 ```objc
 - (void) sendMessage:(NSString*)message userName:(NSString*)userName completion:(void (^)(NSError *, id))completion {
-    
-    
+
+
     NSDictionary *jsonObj = @{USER_NAME_KEY:userName,MESSAGE_KEY:message};
-    
+
     //將dictionary轉為json
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObj options:NSJSONWritingPrettyPrinted error:nil];
-    
+
     //但回傳為 NSData不好操作,所以再轉為 NSString 以utf8作編碼
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
 		//AFNetWorking 會將dictionary內容輸出為 -> data={"Username":"tester","Message":"aaaa"}
     NSDictionary *parameters = @{DATA_KEY:jsonString};
-    
+
     [self doPost:SENDMESSAGE_URL parameters:parameters success:^(id result) {
-        
+
         completion(nil,result);
-        
+
     } fail:^(NSError *error) {
-        
+
         completion(error,nil);
     }];
 }
@@ -163,7 +166,7 @@ static Communicator *_SingletonCommunicator = nil;
 [2.3]Refresh Button Pressed
 ```objc
 [communicator downloadMessagesWithCompletion:^(NSError *error, id result) {
-        
+
         if(error)
         {
             NSLog(@"Error: %@",error.description);
@@ -171,18 +174,18 @@ static Communicator *_SingletonCommunicator = nil;
         else
         {
             NSLog(@"message: %@",[result description]);
-            
+
             NSArray *messages = result[MESSAGES_KEY];
-            
+
             //Revert array 讓最新的在上
             messages = [[messages reverseObjectEnumerator]allObjects];
-            
+
             for(NSDictionary *tmp in messages)
             {
                 NSString *tmpID = tmp[ID_KEY];
                 NSString *userName = tmp[USER_NAME_KEY];
                 NSString *message = tmp[MESSAGE_KEY];
-               
+
                 //判斷是否有更新的資料(以資料庫累加的id作判斷)，有才會寫到對話紀錄裡
                 if([tmpID integerValue]>lastMessageID){
                     NSString *fullString = [NSString stringWithFormat:@"(%@) %@: %@",tmpID
@@ -199,20 +202,20 @@ static Communicator *_SingletonCommunicator = nil;
 
 [2.4]Send Button Pressed
 ```objc
--(IBAction)sendBtnPressed:(id)sender {    
+-(IBAction)sendBtnPressed:(id)sender {
     if(_messageTF.text.length == 0){
         return;
-    }  
+    }
     NSString *message = _messageTF.text;
     NSString *userName = _userNameTF.text;
     [communicator sendMessage:message userName:userName completion:
     ^(NSError *error, id result) {
-       
+
         if(error)
             NSLog(@"Error: %@",error.description);
-        else        
-            [self refreshBtnPressed:nil]; 
-    }];    
+        else
+            [self refreshBtnPressed:nil];
+    }];
 }
 ```
 
@@ -222,13 +225,13 @@ static Communicator *_SingletonCommunicator = nil;
 ```objc
 - (void) registerAPNS {
     UIApplication *app = [UIApplication sharedApplication];
-    
+
     if ([app respondsToSelector:@selector(registerForRemoteNotifications)])
     {
         // iOS 8 and latter
       	//開啟alert,badge,sound
         UIUserNotificationType type = UIUserNotificationTypeAlert |UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
-        
+
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type categories:nil];
         [app registerUserNotificationSettings:settings];
         [app registerForRemoteNotifications];
@@ -236,7 +239,7 @@ static Communicator *_SingletonCommunicator = nil;
     else // before iOS8
     {
         UIRemoteNotificationType type = UIRemoteNotificationTypeAlert |UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
-        
+
         [app registerForRemoteNotificationTypes:type];
     }
 }
@@ -245,17 +248,17 @@ static Communicator *_SingletonCommunicator = nil;
 [3.2]取得裝置的DeviceToken
 ```objc appDelegate.m
 - (void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    
+
     NSLog(@"APNS Register successfully: %@",deviceToken.description);
-    
+
     //拆成之後要送給APNs的格式
     NSString *deviceTokenString = [deviceToken description];
     deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@"<" withString:@""];
     deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@">" withString:@""];
     deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
+
     NSLog(@"deviceTokenString: %@",deviceTokenString);
-    
+
     //Notify ViewController
     [[NSNotificationCenter defaultCenter] postNotificationName:DEVICETOKEN_RECEIVED_NOTIFICATION object:deviceTokenString];
 }
@@ -264,21 +267,21 @@ static Communicator *_SingletonCommunicator = nil;
 [3.3]建立更新deviceToken的Method
 ```objc Communicator.m
 - (void) updateDeviceToken:(NSString*)message userName:(NSString*)userName completion:(void (^)(NSError *, id))completion {
-    
+
     NSDictionary *jsonObj = @{USER_NAME_KEY:userName,DEVICETOKEN_KEY:message};
-    
+
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObj options:NSJSONWritingPrettyPrinted error:nil];
-    
+
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
+
     NSDictionary *parameters = @{DATA_KEY:jsonString};
-    
+
     [self doPost:UPDATEDEVICETOKEN_URL parameters:parameters success:^(id result) {
-        
+
         completion(nil,result);
-        
+
     } fail:^(NSError *error) {
-        
+
         completion(error,nil);
     }];
 }
@@ -291,7 +294,7 @@ static Communicator *_SingletonCommunicator = nil;
 //避免換手機DeviceToken改變無差別更新
 -(void) didDeviceTokenReceived:(NSNotification *)notify{
     deviceToken = notify.object;
-    [communicator updateDeviceToken:deviceToken userName:_userNameTF.text 
+    [communicator updateDeviceToken:deviceToken userName:_userNameTF.text
     completion:^(NSError *error, id result) {
         if(error)
         {
@@ -300,17 +303,17 @@ static Communicator *_SingletonCommunicator = nil;
         else{
             NSString *content = [NSString stringWithFormat:@"Update deviceToken OK.(%@)"
             ,deviceToken];
-            [self appendToLog:content];           
+            [self appendToLog:content];
         }
-    }];   
+    }];
 }
 ```
 
 [3.5]自動更新機制，當有人發訊息自動更新
 ```objc appDelegate.m
- -(void) application:(UIApplication *)application 
-  didReceiveRemoteNotification:(NSDictionary *)userInfo {   
-    NSLog(@"didReceiveRemoteNotification: %@",userInfo);   
+ -(void) application:(UIApplication *)application
+  didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"didReceiveRemoteNotification: %@",userInfo);
     if(application.applicationState == UIApplicationStateActive)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:MESSAGES_SHOULD_REFRESH_NOTIFICATION object:nil];
@@ -318,20 +321,20 @@ static Communicator *_SingletonCommunicator = nil;
 }
 ```
 
-```objc ViewController.m 
+```objc ViewController.m
 //viewDidLoad加上
 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshBtnPressed:) name:MESSAGES_SHOULD_REFRESH_NOTIFICATION object:nil];
 
 -(IBAction)refreshBtnPressed:(id)sender {
-    [communicator downloadMessagesWithCompletion:^(NSError *error, id result) {        
+    [communicator downloadMessagesWithCompletion:^(NSError *error, id result) {
         if(error)
         {
             NSLog(@"Error: %@",error.description);
         }
         else
         {
-            NSLog(@"message: %@",[result description]);            
-            NSArray *messages = result[MESSAGES_KEY];            
+            NSLog(@"message: %@",[result description]);
+            NSArray *messages = result[MESSAGES_KEY];
             //Revert array
             messages = [[messages reverseObjectEnumerator]allObjects];
             for(NSDictionary *tmp in messages)
@@ -339,7 +342,7 @@ static Communicator *_SingletonCommunicator = nil;
                 NSString *tmpID = tmp[ID_KEY];
                 NSString *userName = tmp[USER_NAME_KEY];
                 NSString *message = tmp[MESSAGE_KEY];
-               
+
                 if([tmpID integerValue]>lastMessageID){
                     NSString *fullString = [NSString stringWithFormat:
                     @"(%@) %@: %@",tmpID,userName,message];
@@ -350,7 +353,7 @@ static Communicator *_SingletonCommunicator = nil;
             NSDictionary *lastItem = messages.lastObject;
             lastMessageID = [lastItem[ID_KEY] integerValue];
         }
-    }];  
+    }];
 }
 ```
 
@@ -363,7 +366,7 @@ static Communicator *_SingletonCommunicator = nil;
 
 [3.6]註冊失敗時
 ```objc appDelegate.m
-- (void) application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {    
+- (void) application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"APNS Register Fail: %@",error.description);
 }
 ```

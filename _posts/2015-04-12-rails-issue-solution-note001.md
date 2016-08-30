@@ -2,8 +2,10 @@
 layout: post
 title: 'Rails issue解決筆記 - Migrations are pending'
 date: 2015-04-12 11:44
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - RoR
 ---
 Model,View,Controller,Route大致瞭解後，開始來架環境，試著完成一個留言板的小專案
 

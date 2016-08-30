@@ -2,8 +2,11 @@
 layout: post
 title: 'Object-C 學習筆記 - 幾種add/remove/insert View的用法'
 date: 2015-09-12 15:25
-comments: true
-categories: 
+author:     "Jesse"
+catalog:    false
+tags:
+    - Objc
+    - iOS
 ---
 
 最常用就addsubview
