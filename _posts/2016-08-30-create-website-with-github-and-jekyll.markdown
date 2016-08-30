@@ -12,7 +12,7 @@ tags:
 這一篇紀錄如何透過Github Pages + Jekyll 快速生成網站，並且使用Custom Domain。如果非前端專業，可以使用google搜尋[Jekyll Theme](http://jekyllthemes.org/)找到喜歡的主題修改使用，本站使用此[Open Source](http://www.apple.com/iphone-6s/3d-touch/)。
 
 ### 基本概念
-[Jekyll](https://jekyllrb.com/) 是一個Open Source的靜態網站產生器，如官方說明。
+[Jekyll](https://jekyllrb.com/) 是一個Open Source的靜態網站產生框架，如官方說明。
 
 > Jekyll is a simple, blog-aware, static site generator perfect for personal, project, or organization sites. Think of it like a file-based CMS, without all the complexity. Jekyll takes your content, renders Markdown and Liquid templates, and spits out a complete, static website ready to be served by Apache, Nginx or another web server. Jekyll is the engine behind GitHub Pages, which you can use to host sites right from your GitHub repositories
 
