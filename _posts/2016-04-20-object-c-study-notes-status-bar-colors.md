@@ -8,16 +8,19 @@ tags:
     - Objc
     - iOS
 ---
-1. info.plist中的`View controller-based status bar appearance`要設為`YES`
-2. 如要意隱藏NavigationBar要使用`self.navigationController.navigationBarHidden = YES`才可以
-3. ViewController中
+
+info.plist中的`View controller-based status bar appearance`要設為`YES`。
+
+如要意隱藏NavigationBar要使用`self.navigationController.navigationBarHidden = YES`才可以。
+
 ```objc
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
+- (UIStatusBarStyle)preferredStatusBarStyle {
 		return (whiteStatusBar)?UIStatusBarStyleLightContent:UIStatusBarStyleDefault;
 }
 ```
-4. `setNeedsStatusBarAppearanceUpdate`會觸發`preferredStatusBarStyle`，也可以這樣實現特效
+
+`setNeedsStatusBarAppearanceUpdate`會觸發`preferredStatusBarStyle`，也可以這樣實現特效。
+
 ```objc
 [UIView animateWithDuration:0.3 animations:^{
             [self setNeedsStatusBarAppearanceUpdate];
