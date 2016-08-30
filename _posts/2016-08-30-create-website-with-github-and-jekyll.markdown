@@ -32,10 +32,13 @@ and unlimited project sites.
 
 * 修改 _config.yml 到您自身的設定，可 [參考](https://jekyllrb.com/docs/configuration/) 參數相關說明。
 * 安裝：先切換到website repo的folder
+
 ```
+
 gem install jekyll
 bundle install
 jekyll serve
+
 ```
 * http://127.0.0.1:4000/
 
