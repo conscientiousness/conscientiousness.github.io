@@ -9,7 +9,7 @@ tags:
     - Jekyll
 ---
 
-這一篇紀錄如何透過Github Pages + Jekyll 快速生成網站，並且使用Custom Domain。如果非前端專業，可以使用google搜尋[Jekyll Theme](http://jekyllthemes.org/)找到喜歡的主題修改使用，本站使用此 [Open Source](https://github.com/huxpro/huxpro.github.io/)。
+這篇紀錄如何透過Github Pages + Jekyll 快速生成網站，並且使用Custom Domain。如果非前端專業，可以使用google搜尋[Jekyll Theme](http://jekyllthemes.org/)找到喜歡的主題修改使用，本站使用此 [Open Source](https://github.com/huxpro/huxpro.github.io/)。
 
 ### 基本概念
 [Jekyll](https://jekyllrb.com/) 是一個Open Source的靜態網站產生框架，如官方說明。
