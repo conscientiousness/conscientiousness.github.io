@@ -68,10 +68,50 @@ iOS 10 其中一個新的feature就是可以下載貼圖for iMessage, 此篇寫�
 3. 點選Download存到電腦中, 點選檔案兩次, 會自動加到keychain中.
 
 - App Store and Ad Hoc
-1. 步驟如上.
+1. 選擇`App Store and Ad Hoc`, 其餘步驟如上.
 2. 記得點選檔案兩次, 會閃一下, 就會加到keychain中了.
 
 <img src="/img/in-post/2016-09-22-ios10-stickers/keychain-cer-list.jpg" style="width: 850px;"/>
+
+###### <3.3 Devices>
+
+這邊設定哪些手機可以透過Xcode或Ad Hoc安裝App
+
+- 如果之前已經用過Xcode
+- 一樣點選Devices > All 後點選`+`
+- Name依你喜好輸入, 之後會顯示在list
+- UUID可以打開itunes查詢, 框選的地方點選一次就會顯示UUID
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/search-uuid-from-itunes.jpg" style="width: 700px;"/>
+
+
+###### <3.4 Provisioning Profile>
+
+這個的用途就是他會打包Certificates, Device IDs, App ID的描述文件, 所以只要上述有變更, Provisioning Profile也要記得更新呀, 這邊一樣也要作兩次囉 for 開發和上架, 步驟一樣, 只要選`iOS App Development` 和 `App Store`
+
+- 點選Provisioning Profile > All, 點選右上角`+`, 選iOS App Development或App Store, 點選Continue.
+- Select App ID: 選擇之前建好的App ID, 點選Continue.
+- Select certificates: 選擇之前建好的憑證, 點選Continue.
+- Select devices: 選擇可以實機測試的裝置.
+- 最後可以不用download, Xcode可以自動下載, 或下載後點兩下也可.
+
+### 開始製作貼圖App拉
+
+#### 1. 建立專案
+
+- 開啟Xcode8, 選擇Create a new Xcode project.
+- 選擇Sticer Pack Application, click Next.
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/proj-kind.png" style="width: 500px;"/>
+
+- Bundle Identifier這邊要跟剛剛APP ID的一樣, 修改Product Name and Orgnization Identifier, Bundle Identifier會跟著連動.
+- 選擇儲存專案的位置.
+
+#### 2. 配置圖檔
+
+### iTunes Connect設定
+
+- [iTunes Connect](https://itunesconnect.apple.com)處理上架App的網站
 
 
 
