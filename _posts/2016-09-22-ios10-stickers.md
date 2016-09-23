@@ -7,6 +7,7 @@ author:     "Jesse"
 header-img: "img/in-post/2016-09-22-ios10-stickers/header-image.jpg"
 catalog:    true
 tags:
+    - iOS
     - iOS 10
     - iMessage
     - sticker
