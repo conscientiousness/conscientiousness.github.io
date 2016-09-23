@@ -140,10 +140,79 @@ iOS 10 其中一個新的feature就是可以下載貼圖for iMessage, 此篇寫�
 
 ### 準備上架囉
 
-- [iTunes Connect](https://itunesconnect.apple.com)處理上架App的網站
+#### 1. 建立新App
 
+- [iTunes Connect](https://itunesconnect.apple.com): 提供開發處理上架App的後台
+- 登入後, 點選左上角`+`, 新的App
 
+> 1. 選擇平台: iOS
+> 2. 名稱: 會顯示在App Store上, 之後可以作多國語系
+> 3. 語言: 看你喜好
+> 4. 套裝組ID: 最一開始憑證那邊設定好的APP ID, 如果找不到就代表設定有誤
+> 5. SKU: 隨便打, 我通常就把Bundle ID倒過來打, com.jesse.sticker -> sticker.jesse.com
 
+<img src="/img/in-post/2016-09-22-ios10-stickers/itunes-new-app.png" style="width: 400px;"/>
+
+#### 2. 上傳
+
+- 接下來, 回到Xcode, 我們要來把App上傳到iTunes Connect.
+- 點上左上角Xcode -> Prefences.. ( <kbd>⌘+,</kbd> )
+- 點選你的開發者帳號(Agent) -> View Detail
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/prefences.jpg" style="width: 600px;"/>
+
+- 點選Download All Profiles將設定資料同步.
+- 再來, 將剛剛選擇的Device改回Generic iOS Device
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/choose-device.png" style="width: 300px;"/>
+
+- 接下來, 打包App, 點選Xcode上方, Product -> Archive, 等他跑完會跳出這個視窗, 如果不小心關掉, 可以從Xcode上方 Window -> Organizer 開啟
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/archive-screen.png" style="width: 600px;"/>
+
+- 點選Upload to App Store..., 選擇你的開發者帳號, next到底, 就會開始上傳了.
+
+#### 3. 資料設定
+
+- 接下來把App資訊, 定價與供應狀況, 填一填.
+- 在點選1.0準備提交, 這裡要上傳螢幕截圖, 現在只需要準備最大尺寸的截圖就可以了, iPhone: 5.5, iPad: 12.9, 以前所有尺寸都需要, 根本浪費生命🌝
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/prepare-for-submit.png" style="width: 700px;"/>
+
+- 如何截圖: 打開模擬器, copy screen
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/copy-screen.png" style="width: 400px;"/>
+
+- 要符合截圖大小,[看這裡](https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Appendices/Properties.html), 以下簡單列出直立的大小
+
+> 1. iPhone 5.5 : 1242 × 2208
+> 2. iPad 12.9 : 2048 × 2732
+
+> **注意** : 圖片不能有透明度, 也就是alpha = 100%
+
+- 準備一張1024x1024的App Store icon.
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/app-store-icon.png" style="width: 200px;"/>
+
+- 這邊把勾選拿掉, 不需要展示.
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/no-need-display.png" style="width: 400px;"/>
+
+- 選擇剛剛上傳的App.
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/select-app.png" style="width: 700px;"/>
+
+- 如果找不到可以點選活動, 看是不是還在處理中.
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/app-status.png" style="width: 700px;"/>
+
+- 接下來就儲存, 送審啦！
+
+### 最後
+
+- 終於寫完了...😅, 有問題或不清楚的地方, 直接在下方留言吧.
+- 覺得有幫助可以請我喝杯咖啡, 不...0.99鎂應該買不起咖啡, Apple抽30%, NT20大概就小杯波密果菜汁吧😭, 不過如果是Line貼圖的話, 還要在被抽50% xd
+- 👉👉貼圖載點  (審核中...之後補上)👈👈
 
 
 
