@@ -1,6 +1,7 @@
 ---
 layout:     post
 title:      "iOS 10 iMessage貼圖上架教學"
+subtitle:   "Creating Stickers for iMessage"
 date:       2016-09-22
 author:     "Jesse"
 header-img: "img/in-post/2016-09-22-ios10-stickers/header-image.jpg"
@@ -11,6 +12,10 @@ tags:
     - sticker
 ---
 
+### 要如何開始？
+
+#### 1. 基本裝備
+
 iOS 10 其中一個新的feature就是可以下載貼圖for iMessage, 此篇寫給非iOS開發者參考, 順便在複習一下上架流程, 首先您必須先獲得下面所列裝備.
 
 > - Xcode
@@ -18,9 +23,15 @@ iOS 10 其中一個新的feature就是可以下載貼圖for iMessage, 此篇寫�
 
 所以您需要有一台MacBook或含有macOS的相關產品來開啟Xcode, 且要繳[99 USD](https://developer.apple.com/support/compare-memberships/)給Apple當上架保護費/per year, 如果沒有認識的開發者或公司帳號, 對純粹只想上架貼圖的設計師是一筆不小開銷, 看到這邊應該就想左轉離開了吧xd
 
-### 帳號設定與憑證申請
+#### 2. 貼圖如何設計
 
-上架貼圖就跟開發一款APP上架的流程幾乎是一樣的，所以您必須經過XCODE build APP 之後上傳到itunes connect送審, 可以完全不需要寫code, 但在這之前比需先申請id, 憑證等等, 才能使用XCODE完成這些動作.
+- 請先詳讀[iOS Human Interface Guidelines - Messaging](https://developer.apple.com/ios/human-interface-guidelines/extensions/messaging/), 這邊詳細定義貼圖Size, 大小, format.
+- Apple還順便推薦(賣)了Motion來製作貼圖, 如有購買請看這篇: [Creating Stickers with Motion](https://developer.apple.com/support/stickers/motion/).
+- 最後，[Review Guidelines](https://developer.apple.com/app-store/review/guidelines/)這邊定義審核機制, 我用關鍵字`sticker`搜尋, 條例：2.3.4, 4.4.3有相關, 基本上就是可以說明清楚你的貼圖用法,不要違法等.
+
+### 先來個囉唆的設定
+
+上架貼圖就跟開發一款APP上架的流程幾乎是一樣的，所以您必須經過Xcode build APP 之後上傳到itunes connect送審, 可以完全不需要寫code, 但在這之前需先申請id, 憑證等等, 才能使用Xcode完成這些動作.
 
 #### 1. 開發者帳號申請
 
@@ -109,7 +120,25 @@ iOS 10 其中一個新的feature就是可以下載貼圖for iMessage, 此篇寫�
 
 #### 2. 配置圖檔
 
-### iTunes Connect設定
+- 接下來是要準備不同大小的icon, 點選左邊Stickers.xcstickers > iMessage App Icon.
+- 大小上面都有寫, 例如29x29要放2x,3x, 意思就是要放2倍=58x58, 3倍=87x87的圖, 如果有用Sketch就export選擇2x,3x囉, 之後有空在寫Sketch的script可以直接將所有大小輸出.
+- 然後在Sticker Pack 放入你的貼圖, 順序跟顯示貼圖的順序是一樣的.
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/import-sticker-icon.png" style="width: 600px;"/>
+
+#### 3. 測試看看貼圖效果
+
+- 點選Xcode上方Product > Build (  <kbd>⌘+B</kbd>  ), 看有沒有錯誤.
+- 點選Generic iOS Device選擇你要Run的Decice
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/choose-device.png" style="width: 300px;"/>
+<img src="/img/in-post/2016-09-22-ios10-stickers/device-list.png" style="width: 300px;"/>
+
+- 選完之後點選Xcode上方Product > Run (  <kbd>⌘+R</kbd>  ), Simulator就會開啟iMessage和你貼圖清單, 有兩個帳號可以互相傳送測試囉.
+
+<img src="/img/in-post/2016-09-22-ios10-stickers/ipad-screen-shot.png" style="width: 500px;"/>
+
+### 準備上架囉
 
 - [iTunes Connect](https://itunesconnect.apple.com)處理上架App的網站
 
