@@ -21,7 +21,7 @@ iOS 10 其中一個新的feature就是可以下載貼圖for iMessage, 此篇寫�
 > - Xcode
 > - 開發者帳號
 
-所以您需要有一台MacBook或含有macOS的相關產品來開啟Xcode, 且要繳[99 USD](https://developer.apple.com/support/compare-memberships/)給Apple當上架保護費/per year, 如果沒有認識的開發者或公司帳號, 對純粹只想上架貼圖的設計師是一筆不小開銷, 看到這邊應該就想左轉離開了吧xd
+所以您需要有一台MacBook或含有macOS的相關產品來開啟Xcode, 且要繳[99 USD](https://developer.apple.com/support/compare-memberships/)給Apple當上架保護費/per year, 如果沒有認識的開發者或公司帳號, 對純粹只想上架貼圖的設計師是一筆不小開銷, 而且還要用開發工具來build貼圖App, 看到這邊應該就想左轉離開了吧xd
 
 #### 2. 貼圖如何設計
 
