@@ -13,7 +13,10 @@ tags:
     - Swift
 ---
 
+### 前言
+
 最近有空來複習一下Core Bluetooth, Demo Code:
+
 - [Objective-C](https://github.com/conscientiousness/BLEPractice)
 - <del>Swift 3.0</del> 尚未完成
 - Using Xcode 8
