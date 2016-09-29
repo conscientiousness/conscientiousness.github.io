@@ -4,7 +4,7 @@ title:      "Core Bluetooth學習筆記"
 subtitle:   "Practical CoreBluetooth for Peripherals"
 date:       2016-09-22
 author:     "Jesse"
-header-img: "img/in-post/2016-09-22-ios10-stickers/header-image.jpg"
+header-img: "img/in-post/2016-09-27-ios-corebluetooth/header-bg-image.jpg"
 catalog:    true
 tags:
     - iOS
@@ -13,221 +13,408 @@ tags:
     - Swift
 ---
 
+最近有空來複習一下Core Bluetooth, 順便也來試試Swift3
+1. Objective-C
+2. Swift 3.0
+3. Xcode 8
+
 ### 基本觀念
 
 #### 1. 什麼是BLE - Bluetooth low energy?
 
 > It’s sort of like Bluetooth. We all know Bluetooth, we all use it in speakers and so on, but the difference is this is a very low powered protocol. Typically, one battery can last a month or even years depending on how it is used. That allows us to do things we normally couldn’t do with Bluetooth. The standard is called Bluetooth 4.0, it started with something called “Smart Bluetooth” and evolved to this one, there’s a 200 page manual you can read before you go to sleep, it’s a gripping read. BLE is very cheap in terms of power use and the protocol is not too complex
 
-#### 2. Core Bluetooth 架構
+#### 2. 架構
 
-- App透過Core Bluetooth去控制BLE底層
+###### <2.1 App透過Core Bluetooth去控制BLE底層>
 
 <img src="https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/Art/CBTechnologyFramework_2x.png" style="width: 250px;"/>
 
-- 周邊與裝置傳輸對應示意圖
+###### <2.2 周邊與裝置傳輸對應示意圖>
 
 <img src="https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/Art/CBDevices1_2x.png" style="width: 550px;"/>
 
-- Centrals Discover and Connect to Peripherals That Are Advertising
+###### <2.3 Peripherals Advertising>
+
 1. Peripherals broadcast some of the data they have in the form of advertising packets. An advertising packet is a relatively small bundle of data that may contain useful information about what a peripheral has to offer.
 2. A central can ask to connect to any peripheral that it has discovered advertising.
 
 <img src="https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/Art/AdvertisingAndDiscovery_2x.png" style="width: 500px;"/>
 
+###### <2.4 Peripheral>
 
+Each peripheral has services, it can have as many services as you want, and each one of these services has characteristics.
 
-#### 1. 基本裝備
+<img src="/img/in-post/2016-09-27-ios-corebluetooth/peripheral-structure.png" style="width: 300px;"/>
 
-> - Xcode
-> - 開發者帳號
+###### <2.5 Peripheral - Server>
 
-所以您需要有一台MacBook或含有macOS的相關產品來開啟Xcode, 且要繳[99 USD](https://developer.apple.com/support/compare-memberships/)給Apple當上架保護費/per year, 如果沒有認識的開發者或公司帳號, 對純粹只想上架貼圖的設計師是一筆不小開銷, 而且還要用開發工具來build貼圖App, 看到這邊應該就想左轉離開了吧xd
+In general you have a service, then this service holds many characteristics, and each characteristic holds a type, value, properties and so on. You don’t have to know the entire thing to work with CoreBluetooth, the most important thing is the reading, this is what we’re actually trying to get and manipulate and change, whatever you need to do, we want this reading and we want to know what we can do with it.
 
-#### 2. 貼圖如何設計
+<img src="/img/in-post/2016-09-27-ios-corebluetooth/peripheral-structure-detail.png" style="width: 450px;"/>
 
-- 請先詳讀[iOS Human Interface Guidelines - Messaging](https://developer.apple.com/ios/human-interface-guidelines/extensions/messaging/), 這邊詳細定義貼圖Size, 大小, format.
-- Apple還順便推薦(賣)了Motion來製作貼圖, 如有購買請看這篇: [Creating Stickers with Motion](https://developer.apple.com/support/stickers/motion/).
-- 最後，[Review Guidelines](https://developer.apple.com/app-store/review/guidelines/)這邊定義審核機制, 我用關鍵字`sticker`搜尋, 條例：2.3.4, 4.4.3有相關, 基本上就是可以說明清楚你的貼圖用法,不要違法等.
+###### <2.5 Background>
 
-### 先來個囉唆的設定
+1. 可被BLE硬體喚醒.
+2. 可於App在背景時繼續掃描, 資料傳輸.
+3. Apple對於背景執行的省電有額外的規範要求.
+4. Background Mode Setting:
 
-上架貼圖就跟開發一款APP上架的流程幾乎是一樣的，所以您必須經過Xcode build APP 之後上傳到itunes connect送審, 可以完全不需要寫code, 但在這之前需先申請id, 憑證等等, 才能使用Xcode完成這些動作.
+> Uses Bluetooth LE accessories - Central Mode
 
-#### 1. 開發者帳號申請
+> Acts as a Bluetooth LE accessories - Peripheral Mode
 
-先到[開發者網站](https://developer.apple.com/)點選右上Account, 使用apple id登入後, 左邊Menu點選Membership可以看到帳戶的狀態, 應該會看到繳交App保護費給Apple的選項, 最下面勾選Auto-Renew Membership可以每年自動繳交保護費.
-<img src="/img/in-post/2016-09-22-ios10-stickers/dev-membership-screen.jpg" style="width: 700px;"/>
+<img src="/img/in-post/2016-09-27-ios-corebluetooth/background-mode-setting.png" style="width: 450px;"/>
 
-#### 2. APP ID 申請
+**參考**: [Core Bluetooth Background Processing for iOS Apps](https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/CoreBluetoothBackgroundProcessingForIOSApps/PerformingTasksWhileYourAppIsInTheBackground.html)
 
-- 點選左側Certificates, IDs & Profiles, 在點選左測App IDs, 之後點選右上角`+`新增App id.
-<img src="/img/in-post/2016-09-22-ios10-stickers/app-ids-screen.jpg" style="width: 700px;"/>
-- App ID Description: Name是用來描述你的App Id 只要符合他的規定可以填你想要的, 之後會顯示在列表中.
-- App ID Suffix: 選擇Explicit App ID, Bundle ID會跟Xcode中設定有關且在APP Store中不會與別人重複, 就用apple範例來取, 如果有重複他會提示, 像我的貼圖專案名稱叫blueSticker, 我就用com.jesse.blueSticker
-- App Services: 不用管他, 貼圖App完全用不到.
-- 點選Continue, 然後就會在list看到你建立的ID拉.
-<img src="/img/in-post/2016-09-22-ios10-stickers/app-id-create-screen.jpg" style="width: 500px;"/>
+### Build a Bluetooth Chat App
 
-#### 3. 建立憑證(Certificates)
+> **目標:**
+> 1. Peripheral Mode: 成為Chat Room Server, 提供其他裝置連入聊天.
+> 2. Central Mode: 掃描Peripheral並尋找提供聊天室功能的Peripheral, 連入聊天.
 
-###### <3.1 本機端>
+#### 1. Central Mode
 
-- 打開keychain(鑰匙圈), 直接用spotlight搜尋最快, 就是個鑰匙圖案的App in Lunchpad > 其他
-- 點選左上角, 如下圖, 輸出certSigningRequest(CSR)檔案
-![](/img/in-post/2016-09-22-ios10-stickers/keychain-setting.png)
-- 選擇您的email, 輸入名稱, CA email不用輸入, 選擇儲存到硬碟.
-- 這邊的檔案是稍候在開發者網站要上傳的.
+- 建立`CentralModeTableViewController`.
+- 宣告Protocal `CBCentralManagerDelegate, CBPeripheralDelegate`.
+- We initialize by calling a new manager, with delegate, queue and options from `[[CBCentralManager alloc] initWithDelegate:self queue:nil]`.
 
-###### <3.2 Certificates>
+```objc
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
 
-- 回到[開發者網站](https://developer.apple.com/)點選Certificates > All, 點選右上角`+`新增Certificate
-- 這邊有好多選項, 把會用到的列出來:
+    CBManagerState state = central.state;
 
-> **Development**
-> - iOS App Development: iPhone測試使用, 可以透過Xcode安裝App到你的iPhone.
+    if (state != CBManagerStatePoweredOn) {
+        NSString *message = [NSString stringWithFormat:@"BLE is not available.(error: %ld)",state];
+        NSLog(@"%@",message);
+    }
 
-> **Production**
-> - App Store and Ad Hoc: 就是上架要用的憑證拉, 而Ad Hoc憑證可以在上架之前, 讓Devices中已設定id的手機安裝.
+}
+```
+- ↑ 實作centralManagerDidUpdateState, 用來監聽Central狀態, 除了poweredOn, 其餘都是error.
 
-所以我們要建立兩個憑證 for Development and Production, 步驟幾乎一樣.
 
-<img src="/img/in-post/2016-09-22-ios10-stickers/certificate-kind.jpg" style="width: 500px;"/>
+```objc
+- (void) startToScan {
 
-- iOS App Development
-1. 選擇`iOS App Development`, 點選Continue這邊是教你怎麼輸入CSR, 剛剛已經建好了.
-2. 再點選Continue會看到Choose File, 選擇剛剛輸出的CSR檔案, 之後點選Generate.
-3. 點選Download存到電腦中, 點選檔案兩次, 會自動加到keychain中.
+    // 指定特定Service UUID, 沒有也可傳nil
+    NSArray *servies = @[];
 
-- App Store and Ad Hoc
-1. 選擇`App Store and Ad Hoc`, 其餘步驟如上.
-2. 記得點選檔案兩次, 會閃一下, 就會加到keychain中了.
+    // Scan時, 是否允許相同UUID裝置同時出現
+    NSDictionary *options = @{CBCentralManagerScanOptionAllowDuplicatesKey:@YES};
+    [centerManger scanForPeripheralsWithServices:servies options:options];
+}
+```
+- ↑ 在TableviewController上, 新增一個Switch, 用來控制掃描開關, 並實作開始與停止控制, 當執行`scanForPeripheralsWithServices`將會call`didDiscoverPeripheral`delegate method.
 
-<img src="/img/in-post/2016-09-22-ios10-stickers/keychain-cer-list.jpg" style="width: 850px;"/>
 
-###### <3.3 Devices>
+```objc
+@interface DiscoveredPeripheral : NSObject
 
-這邊設定哪些手機可以透過Xcode或Ad Hoc安裝App
+@property (nonatomic, strong) CBPeripheral *peripheral;
+@property (nonatomic, assign) NSInteger lastRSSI;
+@property (nonatomic, strong) NSDate *lastSeenDateTime;
 
-- 如果之前已經用過Xcode
-- 一樣點選Devices > All 後點選`+`
-- Name依你喜好輸入, 之後會顯示在list
-- UUID可以打開itunes查詢, 框選的地方點選一次就會顯示UUID
+@end
+```
+- ↑ 建立處理Peripheral的Model.
 
-<img src="/img/in-post/2016-09-22-ios10-stickers/search-uuid-from-itunes.jpg" style="width: 700px;"/>
+```objc
+- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *,id> *)advertisementData RSSI:(NSNumber *)RSSI {
 
+    NSString *uuid = peripheral.identifier.UUIDString;
+    BOOL isExist = allDiscovered[uuid] != nil;
 
-###### <3.4 Provisioning Profile>
+    if(isExist == NO) {
+        NSLog(@"Found: %@(%@), RSSI: %ld",peripheral.identifier,peripheral.name, (long)[RSSI integerValue]);
+    }
 
-這個的用途就是他會打包Certificates, Device IDs, App ID的描述文件, 所以只要上述有變更, Provisioning Profile也要記得更新呀, 這邊一樣也要作兩次囉 for 開發和上架, 步驟一樣, 只要選`iOS App Development` 和 `App Store`
+    DiscoveredPeripheral *item = [DiscoveredPeripheral new];
+    item.peripheral = peripheral;
+    item.lastRSSI = [RSSI integerValue];
+    item.lastSeenDateTime = [NSDate date];
+    [allDiscovered setObject:item forKey:uuid];
 
-- 點選Provisioning Profile > All, 點選右上角`+`, 選iOS App Development或App Store, 點選Continue.
-- Select App ID: 選擇之前建好的App ID, 點選Continue.
-- Select certificates: 選擇之前建好的憑證, 點選Continue.
-- Select devices: 選擇可以實機測試的裝置.
-- 最後可以不用download, Xcode可以自動下載, 或下載後點兩下也可.
+    [self.tableView reloadData];
+}
+```
+- ↑ 將scan到的peripheral, 存到dictionary中, 並將資料顯示在tableview上, peripheral的UUID是Central manager自動分配.
 
-### 開始製作貼圖App拉
+```objc
+- (void) tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+
+    [self connectWithIndexPath:indexPath];
+}
+
+- (void) connectWithIndexPath:(NSIndexPath *)indexPath {
+
+    NSArray *allkeys = allDiscovered.allKeys;
+    DiscoveredPeripheral *target = allkeys[indexPath.row];
+    [centerManger connectPeripheral:target.peripheral options:nil];
+    detailInfoString = [NSMutableString new];
+}
+```
+- ↑ 點選cell accessory btn時, 連接peripheral並顯示資訊, 透過實作這兩個delegate: didConnectPeripheral,didFailToConnectPeripheral.
+
+```objc
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
+
+    NSLog(@"Peripheral Connect: %@",peripheral.name);
+
+    [self stopScanning];
+
+    peripheral.delegate = self;
+    [resetServices removeAllObjects];
+    // 尋找Serevices
+    [peripheral discoverServices:nil];
+}
+
+- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error {
+
+    NSLog(@"Fail to Connect Peripheral: %@",error.description);
+}
+
+- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(nonnull CBPeripheral *)peripheral error:(nullable NSError *)error {
+
+    NSLog(@"Disconnected: %@",peripheral.name);
+    [self startToScan];
+}
+```
+- ↑ 實作處理連上Peripheral, Error handler, 斷線處理的delegate
+
+```objc
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(nullable NSError *)error {
+
+    if(error) {
+        NSLog(@"didDiscoverServices error: %@",error.description);
+        [centerManger cancelPeripheralConnection:peripheral];
+        [self startToScan];
+        return;
+    }
+
+    NSArray *allServices = peripheral.services;
+    [resetServices addObjectsFromArray:allServices];
+
+    // Pick the first one to discover characteristic
+    // discoverCharacteristics 觸發 didDiscoverCharacteristicsForService
+    [peripheral discoverCharacteristics:nil forService:[resetServices firstObject]];
+    [resetServices removeObjectAtIndex:0];
+}
+```
+- ↑ 尋找到Peripheral的Services, 再去找Service中的Characteristics
+
+```objc
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error {
+
+    if(error) {
+        NSLog(@"didDiscoverCharacteristics error: %@",error.description);
+        [centerManger cancelPeripheralConnection:peripheral];
+        [self startToScan];
+        return;
+    }
+
+    [detailInfoString appendFormat:@"*** Peripheral: %@ (%ld services)\n",peripheral.name,peripheral.services.count];
+    [detailInfoString appendFormat:@"** Service: %@ (%ld characteristic)\n",service.UUID.UUIDString,service.characteristics.count];
+
+    for(CBCharacteristic *cbc in service.characteristics) {
+        [detailInfoString appendFormat:@"* Characteristic: %@\n",cbc.UUID.UUIDString];
+    }
+
+    if(resetServices.count == 0) {
+        // show result
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Result" message:detailInfoString preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:^{
+            [centerManger cancelPeripheralConnection:peripheral];
+            [self startToScan];
+            detailInfoString = nil;
+        }];
+
+    } else {
+        [detailInfoString appendString:@"\n"];
+        [peripheral discoverCharacteristics:nil forService:[resetServices firstObject]];
+        [resetServices removeObjectAtIndex:0];
+    }
+}
+```
+- ↑ 尋找到Service中的Characteristics並把結果顯示出來, 原則就是連線時停止掃描, 有error就`cancelPeripheralConnection`且重新開啟掃描.
+
+> **流程:** 連接Peripheral -> 取得所有service(用array存service) -> 利用service取得Characteristic(利用service的array)
+
+- 第一階段完成DEMO
+
+<img src="/img/in-post/2016-09-27-ios-corebluetooth/show-info.png" style="width: 400px;"/>
+
+#### 2. Chat Room in Central Mode
+
+- 建立TalkingViewController, 可以輸入與觀看訊息.
+
+```objc
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    _talkingPeripheral.delegate = self;
+    // 開啟Characteristic的NotifyValue, Central將可以收到通知, 觸發didUpdateValueForDescriptor
+    [_talkingPeripheral setNotifyValue:YES forCharacteristic:_talkingCharacteristic];
+}
+```
+- ↑ 指派目前Peripheral的delegate並且開啟Notify
+
+```objc
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(nonnull CBCharacteristic *)characteristic error:(nullable NSError *)error {
+
+    // MARK: - Step 20
+    NSString *content = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
+    NSLog(@"Receive from Peripheral: %@",content);
+    // End Step 20
+}
+```
+- ↑ NotifyValue
+
+```objc
+- (BOOL) textFieldShouldReturn:(UITextField *)textField {
+
+    [textField resignFirstResponder];
+
+    if(textField.text.length > 0) {
+        NSString *context = [NSString stringWithFormat:@"[iPhone6] %@\n",textField.text];
+        NSData *data = [context dataUsingEncoding:NSUTF8StringEncoding];
+
+        [_talkingPeripheral writeValue:data forCharacteristic:_talkingCharacteristic type:CBCharacteristicWriteWithResponse];
+    }
+    return NO;
+}
+```
+- ↑ 送出
+
+> CBCharacteristicWriteWithResponse/CBCharacteristicWriteWithoutResponse: 設定Peripheral收到是否有Response
+
+```objc
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {
+    if(error != nil) {
+        NSLog(@"didWriteValueForCharacteristic error: %@",error.description);
+    }
+}
+```
+- ↑ Response
+
+#### 3. Chat Room in Peripheral Mode
+
+- 使裝置提供Chat Room Service
+- 一樣先拉出聊天室的layout
+- 初始化PeripheralManager, `[[CBPeripheralManager alloc] initWithDelegate:self queue:nil]`
 
-#### 1. 建立專案
-
-- 開啟Xcode8, 選擇Create a new Xcode project.
-- 選擇Sticer Pack Application, click Next.
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/proj-kind.png" style="width: 500px;"/>
-
-- Bundle Identifier這邊要跟剛剛APP ID的一樣, 修改Product Name and Orgnization Identifier, Bundle Identifier會跟著連動.
-- 選擇儲存專案的位置.
-
-#### 2. 配置圖檔
-
-- 接下來是要準備不同大小的icon, 點選左邊Stickers.xcstickers > iMessage App Icon.
-- 大小上面都有寫, 例如29x29要放2x,3x, 意思就是要放2倍=58x58, 3倍=87x87的圖, 如果有用Sketch就export選擇2x,3x囉, 之後有空在寫Sketch的script可以直接將所有大小輸出.
-- 然後在Sticker Pack 放入你的貼圖, 順序跟顯示貼圖的順序是一樣的.
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/import-sticker-icon.png" style="width: 600px;"/>
-
-#### 3. 測試看看貼圖效果
-
-- 點選Xcode上方Product > Build (  <kbd>⌘+B</kbd>  ), 看有沒有錯誤.
-- 點選Generic iOS Device選擇你要Run的Decice
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/choose-device.png" style="width: 300px;"/>
-<img src="/img/in-post/2016-09-22-ios10-stickers/device-list.png" style="width: 300px;"/>
-
-- 選完之後點選Xcode上方Product > Run (  <kbd>⌘+R</kbd>  ), Simulator就會開啟iMessage和你貼圖清單, 有兩個帳號可以互相傳送測試囉.
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/ipad-screen-shot.png" style="width: 500px;"/>
-
-### 準備上架囉
-
-#### 1. 建立新App
-
-- [iTunes Connect](https://itunesconnect.apple.com): 提供開發處理上架App的後台
-- 登入後, 點選左上角`+`, 新的App
-
-> 1. 選擇平台: iOS
-> 2. 名稱: 會顯示在App Store上, 之後可以作多國語系
-> 3. 語言: 看你喜好
-> 4. 套裝組ID: 最一開始憑證那邊設定好的APP ID, 如果找不到就代表設定有誤
-> 5. SKU: 隨便打, 我通常就把Bundle ID倒過來打, com.jesse.sticker -> sticker.jesse.com
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/itunes-new-app.png" style="width: 400px;"/>
-
-#### 2. 上傳
-
-- 接下來, 回到Xcode, 我們要來把App上傳到iTunes Connect.
-- 點上左上角Xcode -> Prefences.. ( <kbd>⌘+,</kbd> )
-- 點選你的開發者帳號(Agent) -> View Detail
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/prefences.jpg" style="width: 600px;"/>
-
-- 點選Download All Profiles將設定資料同步.
-- 再來, 將剛剛選擇的Device改回Generic iOS Device
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/choose-device.png" style="width: 300px;"/>
-
-- 接下來, 打包App, 點選Xcode上方, Product -> Archive, 等他跑完會跳出這個視窗, 如果不小心關掉, 可以從Xcode上方 Window -> Organizer 開啟
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/archive-screen.png" style="width: 600px;"/>
-
-- 點選Upload to App Store..., 選擇你的開發者帳號, next到底, 就會開始上傳了.
-
-#### 3. 資料設定
-
-- 接下來把App資訊, 定價與供應狀況, 填一填.
-- 在點選1.0準備提交, 這裡要上傳螢幕截圖, 現在只需要準備最大尺寸的截圖就可以了, iPhone: 5.5, iPad: 12.9, 以前所有尺寸都需要, 根本浪費生命🌝
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/prepare-for-submit.png" style="width: 700px;"/>
-
-- 如何截圖: 打開模擬器, copy screen
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/copy-screen.png" style="width: 400px;"/>
-
-- 要符合截圖大小,[看這裡](https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Appendices/Properties.html), 以下簡單列出直立的大小
-
-> 1. iPhone 5.5 : 1242 × 2208
-> 2. iPad 12.9 : 2048 × 2732
-
-> **注意** : 圖片不能有透明度, 也就是alpha = 100%
-
-- 準備一張1024x1024的App Store icon.
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/app-store-icon.png" style="width: 200px;"/>
-
-- 這邊把勾選拿掉, 不需要展示.
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/no-need-display.png" style="width: 400px;"/>
-
-- 選擇剛剛上傳的App.
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/select-app.png" style="width: 700px;"/>
-
-- 如果找不到可以點選活動, 看是不是還在處理中.
-
-<img src="/img/in-post/2016-09-22-ios10-stickers/app-status.png" style="width: 700px;"/>
-
-- 接下來就儲存, 送審啦！
+```objc
+- (IBAction)switchValueChanged:(id)sender {
+
+    if([sender isOn]) {
+        CBUUID *uuid = [CBUUID UUIDWithString:kServiceUUID];
+        NSArray *uuids = @[uuid];
+
+        // CBAdvertisementDataServiceDataKey的value必須要用array
+        NSDictionary *info = @{CBAdvertisementDataServiceDataKey: uuids,
+                               CBAdvertisementDataLocalNameKey: kPeripheralName};
+        [peripheralManager startAdvertising:info];
+
+    } else {
+        [peripheralManager stopAdvertising];
+    }
+}
+```
+- ↑ 用switch控制peripheral開關Advertising
+
+```objc
+- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral {
+
+    CBManagerState state = peripheral.state;
+
+    if(state != CBManagerStatePoweredOn) {
+        NSLog(@"peripheralManagerDidUpdateState error = %ld",state);
+    } else {
+        CBUUID *uuidService = [CBUUID UUIDWithString:kServiceUUID];
+        CBUUID *uuidCharacteristic = [CBUUID UUIDWithString:kCharacteristicUUID];
+
+        CBCharacteristicProperties porperties = CBCharacteristicPropertyWrite | CBCharacteristicPropertyRead | CBCharacteristicPropertyNotify;
+        CBAttributePermissions permissions = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
+
+        chatCharacteristic = [[CBMutableCharacteristic alloc] initWithType:uuidCharacteristic properties:porperties value:nil permissions:permissions];
+
+        CBMutableService *chatService = [[CBMutableService alloc] initWithType:uuidService primary:YES];
+        chatService.characteristics = @[chatCharacteristic];
+
+        [peripheralManager addService:chatService];
+    }
+}
+```
+- ↑ 如狀態為poweredOn時新增Service到peripheralManager
+
+```objc
+- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic {
+
+    NSString *hello = [NSString stringWithFormat:@"[%@] Welcome ! Here is %@, (Total:%ld, Max Length:%ld)",kPeripheralName,kPeripheralName,chatCharacteristic.subscribedCentrals.count,central.maximumUpdateValueLength];
+
+    [self sendText:hello central:central];
+
+    _logTextView.text = [NSString stringWithFormat:@"%@%@",hello,_logTextView.text];
+}
+```
+- ↑ 當Central notify這個Characteristic, 此方法會觸發, 當有central連入, 發送歡迎訊息
+
+```objc
+- (void)sendText:(NSString *)text central:(CBCentral *)central {
+    NSData *data = [text dataUsingEncoding:NSUTF8StringEncoding];
+
+    if(central == nil) {
+        [peripheralManager updateValue:data forCharacteristic:chatCharacteristic onSubscribedCentrals:nil];
+    } else {
+        [peripheralManager updateValue:data forCharacteristic:chatCharacteristic onSubscribedCentrals:@[central]];
+    }
+}
+```
+- ↑ 發送訊息共用Method, 無傳入Central就發給所有訂閱者
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+
+    [textField resignFirstResponder];
+
+    if(textField.text.length > 0) {
+        NSString *content = [NSString stringWithFormat:@"[%@] %@\n",kPeripheralName,textField.text];
+        [self sendText:content central:nil];
+
+        _logTextView.text = [NSString stringWithFormat:@"%@%@",content,_logTextView.text];
+    }
+
+    return NO;
+}
+- ↑ 發送訊息
+
+```objc
+- (void) peripheralManager:(CBPeripheralManager *)peripheral didReceiveWriteRequests:(nonnull NSArray<CBATTRequest *> *)requests {
+
+    // MARK: - Step 29
+    for(CBATTRequest *tmp in requests) {
+
+        // Tell Central it is received.
+        [peripheralManager respondToRequest:tmp withResult:CBATTErrorSuccess];
+
+        // Show on UI and forward to all Centrals
+        NSString *content = [[NSString alloc] initWithData:tmp.value encoding:NSUTF8StringEncoding];
+
+        if(content != nil) {
+
+            // 發給其他user
+            [self sendText:content central:nil];
+            _logTextView.text = [NSString stringWithFormat:@"%@%@",content,_logTextView];
+        }
+    }
+    // End Step 29
+}
+```
+- ↑ （1) 當Central writeValue to Characteristic:`[_talkingPeripheral writeValue:data forCharacteristic:_talkingCharacteristic type:CBCharacteristicWriteWithResponse]` 會觸發`didReceiveWriteRequests`方法.
+<br>
+(2) 回應requset並將訊息發送給所有訂閱者.
 
 ### Reference
 
