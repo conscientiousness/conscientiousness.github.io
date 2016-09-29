@@ -302,6 +302,10 @@ In general you have a service, then this service holds many characteristics, and
 
 #### 3. Chat Room in Peripheral Mode
 
+> **注意**: Peripheral Mode下iOS10要在plist新增權限:
+NSBluetoothPeripheralUsageDescription
+
+
 - 使裝置提供Chat Room Service
 - 一樣先拉出聊天室的layout
 - 初始化PeripheralManager, `[[CBPeripheralManager alloc] initWithDelegate:self queue:nil]`
@@ -415,6 +419,14 @@ In general you have a service, then this service holds many characteristics, and
 - ↑ （1) 當Central writeValue to Characteristic:`[_talkingPeripheral writeValue:data forCharacteristic:_talkingCharacteristic type:CBCharacteristicWriteWithResponse]` 會觸發`didReceiveWriteRequests`方法.
 <br>
 (2) 回應requset並將訊息發送給所有訂閱者.
+
+### Demo
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/a2EWzPlwx20" frameborder="0" allowfullscreen></iframe>
+
+- 00:00 - 00:21 : Central Mode
+- 00:22 - 00:50 : Enter Chat Room in Central Mode
+- 00:51 : Create Chat Room in Peripheral Mode
 
 ### Reference
 
