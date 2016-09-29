@@ -13,10 +13,10 @@ tags:
     - Swift
 ---
 
-最近有空來複習一下Core Bluetooth, 順便也來試試Swift3
-1. Objective-C
-2. Swift 3.0
-3. Xcode 8
+最近有空來複習一下Core Bluetooth, Demo Code:
+- Objective-C
+- <del>Swift 3.0</del> 尚未完成
+- Using Xcode 8
 
 ### 基本觀念
 
