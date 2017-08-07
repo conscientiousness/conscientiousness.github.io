@@ -5,7 +5,7 @@ date: 2016-06-19 09:04
 author:     "Jesse"
 catalog:    false
 tags:
-    - swift
+    - Swift
 ---
 
 之前是參考一個日本工程師發佈的
