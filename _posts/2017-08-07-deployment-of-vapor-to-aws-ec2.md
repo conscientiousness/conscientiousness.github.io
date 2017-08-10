@@ -16,7 +16,7 @@ tags:
 
 不久之前vapor改版升級至Vapor2, 效能也大幅提升([官方文章](https://medium.com/@qutheory/vapor-2-less-code-more-power-af1e1ec5affa)), 之後Swift4也不會像2轉3這麼恐怖的大改, 就決定用Vapor提供API給我自己的Side Project App用, 因為不論是Parse還是Firebase如果遇到資料結構稍微複雜真的很難用, 不過網路上相關文章也是很少, 踩了無數地雷, [Slack](http://vapor.team)問問題與尋找答案, 花了大概幾天才把後端的環境建置起來, 至於為什麼不用發展成熟的Nodejs, Rails, PHP...試過Nodejs大概兩個禮拜, 雖然有強大豐富的NPM資源, 教學資源也豐富, 身為iOS開發者還是寫Swift比較爽.
 
-建置環境前, 要了解基本的Linux權限控管與語法, 才不會遇到一些問題, 例如一開始我沒把權限分好, 用Supervisor執行程式, 一直出現permission的錯誤, 以下只記錄我的建置步驟, 如有Linux的問題可參考(鳥哥的Linux 私房菜)[http://linux.vbird.org/]
+建置環境前, 要了解基本的Linux權限控管與語法, 才不會遇到一些問題, 例如一開始我沒把權限分好, 用Supervisor執行程式, 一直出現permission的錯誤, 以下只記錄我的建置步驟, 如有Linux的問題可參考[鳥哥的Linux 私房菜](http://linux.vbird.org/)
 
 ## 環境
 ---
